@@ -18,54 +18,49 @@ class AuthControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->authServiceMock = $this->createMock(AuthService::class);
         $this->authController = new AuthController($this->authServiceMock);
     }
 
     /** @test */
-    public function it_should_call_register_on_auth_service()
+    public function it_should_call_register_on_auth_service(): void
     {
         $request = new Request([
-            'name' => 'John Doe',
-            'email' => 'johndoe2@example.com',
+            'name' => 'Samet',
+            'email' => 'smtkuo@gmail.com',
             'password' => 'Password123',
             'password_confirmation' => 'Password123'
         ]);
         $this->authServiceMock->expects($this->once())
             ->method('register')
             ->with($request->all());
-
         $this->authController->register($request);
     }
 
     /** @test */
-    public function it_should_call_login_on_auth_service()
+    public function it_should_call_login_on_auth_service(): void
     {
         $request = new Request([
-            'email' => 'johndoe@example.com',
+            'email' => 'smtkuo@gmail.com',
             'password' => 'Password123'
         ]);
         $this->authServiceMock->expects($this->once())
             ->method('login')
             ->with([
-                'email' => 'johndoe@example.com',
+                'email' => 'smtkuo@gmail.com',
                 'password' => 'Password123'
             ]);
-
         $this->authController->login($request);
     }
 
      /** @test */
-     public function authenticated_user_can_get_their_details()
+     public function authenticated_user_can_get_their_details(): void
      {
          $user = User::factory()->create();
          $token = JWTAuth::fromUser($user);
          $response = $this->withHeaders([
              'Authorization' => 'Bearer ' . $token,
          ])->get('/api/user-details');
- 
-         // Yanıtı doğrula
          $response->assertStatus(200);
      }
 }

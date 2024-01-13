@@ -57,7 +57,7 @@ class SmsController extends Controller
                 'phone_number' => 'required',
                 'message' => 'required'
             ]);
-            $user = $request->get('user');
+            $user = $request->user(); 
             $sendSmsResponse = $this->smsService->sendSMS(
                 $user->id,
                 $request->phone_number,
@@ -134,7 +134,7 @@ class SmsController extends Controller
                 'messages.*.phone_number' => 'required|string',
                 'messages.*.message' => 'required|string',
             ]);
-            $user = $request->user();
+            $user = $request->user(); 
             $sendBulkSMSResponse = $this->smsService->sendBulkSMS(
                 $user->id,
                 $request->messages
@@ -229,8 +229,8 @@ class SmsController extends Controller
     public function getReport(Request $request): JsonResponse
     {
         try {
-            $user = $request->user();
-            $userId = $user->id;
+            $user = $request->user(); 
+            $userId = $user['id'];
             $status = $request->query('status');
             $startDate = $request->query('start_date');
             $endDate = $request->query('end_date');
@@ -285,7 +285,7 @@ class SmsController extends Controller
     public function getDetail(Request $request): JsonResponse
     {
         try {
-            $user = $request->user();
+            $user = $request->user(); 
             $statistics = $this->smsService->getDetail($user->id);
 
             return ResponseHelper::success($statistics, 'SMS Statistics');

@@ -150,9 +150,9 @@ class AuthController extends Controller
     public function getUserDetails(Request $request): JsonResponse
     {
         try {
-            $user = $request->get('user');
+            $userData = $request->user();
 
-            return ResponseHelper::success(compact('user'), 'User details retrieved', HttpStatusCode::OK->value);
+            return ResponseHelper::success($userData, 'User details retrieved', HttpStatusCode::OK->value);
         } catch (ApiException $e) {
             return ResponseHelper::error($e->getMessage(), HttpStatusCode::FORBIDDEN->value);
         }
