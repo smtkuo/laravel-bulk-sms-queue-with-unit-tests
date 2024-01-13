@@ -7,21 +7,16 @@ use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Helpers\ResponseHelper;
 use App\Enums\HttpStatusCode;
-
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-
     public function __construct(
         protected AuthService $authService
     ) {
     }
 
     /**
-     * @param Request $request
-     * 
-     * @return mixed
-     * 
      * @OA\Post(
      *     path="/api/register",
      *     tags={"auth"},
@@ -31,8 +26,8 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name","email","password"},
-     *             @OA\Property(property="name", type="string", format="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
+     *             @OA\Property(property="name", type="string", format="string", example="Samet"),
+     *             @OA\Property(property="email", type="string", format="email", example="smtkuo@gmail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Password123"),
      *             @OA\Property(property="password_confirmation", type="string", format="password", example="Password123")
      *         )
@@ -50,8 +45,13 @@ class AuthController extends Controller
      *         description="Invalid input"
      *     )
      * )
+     * 
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     * 
      */
-    public function register(Request $request): mixed
+    public function register(Request $request): JsonResponse
     {
         try {
             $validatedData = $request->validate([
@@ -62,19 +62,13 @@ class AuthController extends Controller
             ]);
             $registerData = $this->authService->register($validatedData);
 
-            return ResponseHelper::success($registerData, 'User registered successfully', HttpStatusCode::CREATED);
+            return ResponseHelper::success($registerData, 'User registered successfully', HttpStatusCode::CREATED->value);
         } catch (ApiException $e) {
-            return ResponseHelper::error($e->getMessage(), HttpStatusCode::BAD_REQUEST);
+            return ResponseHelper::error($e->getMessage(), HttpStatusCode::BAD_REQUEST->value);
         }
     }
 
-
-
     /**
-     * @param Request $request
-     * 
-     * @return mixed
-     * 
      * @OA\Post(
      *     path="/api/login",
      *     tags={"auth"},
@@ -84,7 +78,7 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email","password"},
-     *             @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
+     *             @OA\Property(property="email", type="string", format="email", example="smtkuo@gmail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Password123"),
      *         )
      *     ),
@@ -100,8 +94,13 @@ class AuthController extends Controller
      *         description="Invalid credentials"
      *     )
      * )
+     * 
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     * 
      */
-    public function login(Request $request): mixed
+    public function login(Request $request): JsonResponse
     {
         try {
             $credentials = $request->validate([
@@ -110,13 +109,13 @@ class AuthController extends Controller
             ]);
             $loginData = $this->authService->login($credentials);
 
-            return ResponseHelper::success($loginData, 'User registered successfully', code: HttpStatusCode::OK);
+            return ResponseHelper::success($loginData, 'User login successfully', code: HttpStatusCode::OK->value);
         } catch (ApiException $e) {
-            return ResponseHelper::error($e->getMessage(), HttpStatusCode::UNAUTHORIZED);
+            return ResponseHelper::error($e->getMessage(), HttpStatusCode::UNAUTHORIZED->value);
         }
     }
 
-    /**
+    /** 
      * @OA\Get(
      *     path="/api/user-details",
      *     tags={"auth"},
@@ -142,15 +141,20 @@ class AuthController extends Controller
      *         description="Unauthorized"
      *     )
      * )
+     * 
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     * 
      */
-    public function getUserDetails(Request $request): mixed
+    public function getUserDetails(Request $request): JsonResponse
     {
         try {
             $user = $request->get('user');
 
-            return ResponseHelper::success(compact('user'), 'User details retrieved', HttpStatusCode::OK);
+            return ResponseHelper::success(compact('user'), 'User details retrieved', HttpStatusCode::OK->value);
         } catch (ApiException $e) {
-            return ResponseHelper::error($e->getMessage(), HttpStatusCode::FORBIDDEN);
+            return ResponseHelper::error($e->getMessage(), HttpStatusCode::FORBIDDEN->value);
         }
     }
 }

@@ -1,15 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel SMS API Dokümantasyonu",
-        "description": "Laravel ile oluşturulan SMS API için Swagger Dokümantasyonu",
-        "contact": {
-            "email": "smtkuo@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "title": "SMS API",
         "version": "1.0.0"
     },
     "paths": {
@@ -34,12 +26,12 @@
                                     "name": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "John Doe"
+                                        "example": "Samet"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "johndoe@example.com"
+                                        "example": "smtkuo@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -102,7 +94,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "johndoe@example.com"
+                                        "example": "smtkuo@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -173,6 +165,275 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/send-sms": {
+            "post": {
+                "tags": [
+                    "SMS"
+                ],
+                "summary": "Send an SMS",
+                "description": "Sends an SMS to a specified phone number",
+                "operationId": "ce75bd9c96cd9214d8e9fa3ff9fea303",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Your SMS message here"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "SMS sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "SMS başarıyla gönderildi."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/send-bulk-sms": {
+            "post": {
+                "tags": [
+                    "SMS"
+                ],
+                "summary": "Bulk SMS send",
+                "description": "Sends SMS messages to multiple recipients",
+                "operationId": "sendBulk",
+                "requestBody": {
+                    "description": "List of messages to be sent",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "messages"
+                                ],
+                                "properties": {
+                                    "messages": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Your SMS message here"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bulk SMS sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bulk SMS başarıyla gönderildi."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sms-report": {
+            "get": {
+                "tags": [
+                    "SMS"
+                ],
+                "summary": "Get SMS Report",
+                "description": "Returns SMS report for a given user, filtered by status, start date, end date, and message content.",
+                "operationId": "getReport",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "The status of the SMS messages to filter by.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "sent"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "The start date for the report period.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-01-01"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "The end date for the report period.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-06-01"
+                        }
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Part of the SMS message content to filter by.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "message"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sms-report-details": {
+            "get": {
+                "tags": [
+                    "SMS"
+                ],
+                "summary": "Get SMS Statistics",
+                "description": "Returns statistical data for a user's SMS reports.",
+                "operationId": "getSmsStatistics",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_sms": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "delivered_sms": {
+                                            "type": "integer",
+                                            "example": 80
+                                        },
+                                        "failed_sms": {
+                                            "type": "integer",
+                                            "example": 20
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

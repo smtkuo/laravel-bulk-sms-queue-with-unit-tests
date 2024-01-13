@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sms_reports', function (Blueprint $table) {
+        Schema::create('sms', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('phone_number');
             $table->text('message');
-            $table->timestamp('send_time');
+            $table->string('status');
+            $table->longText('response')->nullable();
+            $table->timestamp('sent_at')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sms_reports');
+        Schema::dropIfExists('sms');
     }
 };

@@ -2,9 +2,20 @@
 
 namespace App\Helpers;
 
+use Illuminate\Http\JsonResponse;
+
 class ResponseHelper
 {
-    public static function success($data, $message = 'Operation Successful', $code = 200)
+    /**
+     * Return a success JSON response.
+     *
+     * @param mixed $data    The data to be returned.
+     * @param string $message The success message.
+     * @param int $code      The HTTP status code.
+     *
+     * @return JsonResponse
+     */
+    public static function success($data, string $message = 'Operation Successful', int $code = 200): JsonResponse
     {
         return response()->json([
             'success' => true,
@@ -13,7 +24,15 @@ class ResponseHelper
         ], $code);
     }
 
-    public static function error($message = 'An error occurred', $code = 500)
+    /**
+     * Return an error JSON response.
+     *
+     * @param string $message The error message.
+     * @param int $code      The HTTP status code.
+     *
+     * @return JsonResponse
+     */
+    public static function error(string $message = 'An error occurred', int $code = 500): JsonResponse
     {
         return response()->json([
             'success' => false,
