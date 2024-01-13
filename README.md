@@ -26,7 +26,7 @@ Bu Laravel projesi, büyük miktarda SMS mesajını tek bir istekle göndermeyi 
 1. Bu projeyi klonlayın:
 
    ```bash
-   git clone https://github.com/kullanici_adi/bulk-sms-projesi.git
+   git clone https://github.com/smtkuo/laravel-bulk-sms-queue-with-unit-tests
    ```
 
 2. Proje dizinine gidin:
