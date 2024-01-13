@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendSmsJob;
 use App\Models\Sms;
+use App\Exceptions\InvalidArgumentException;
 
 class SmsService
 {
@@ -26,6 +27,10 @@ class SmsService
      */
     public function sendSMS(int $userId, string $phoneNumber, string $message): Sms
     {
+        if (!preg_match('/^\+?[1-9]\d{1,14}$/', $phoneNumber)) {
+            return throw new InvalidArgumentException("Geçersiz telefon numarası: $phoneNumber");
+        }
+        
         $smsCreate = $this->smsRepository->create([
             'user_id' => $userId,
             'phone_number' => $phoneNumber,

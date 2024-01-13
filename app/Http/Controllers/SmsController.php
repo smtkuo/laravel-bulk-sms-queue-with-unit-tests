@@ -8,6 +8,7 @@ use App\Helpers\ResponseHelper;
 use App\Enums\HttpStatusCode;
 use App\Exceptions\ApiException;
 use Illuminate\Http\JsonResponse;
+use App\Exceptions\InvalidArgumentException;
 
 class SmsController extends Controller
 {
@@ -65,6 +66,8 @@ class SmsController extends Controller
             );
 
             return ResponseHelper::success($sendSmsResponse, 'SMS başarıyla gönderildi.', code: HttpStatusCode::OK->value);
+        } catch (InvalidArgumentException $e) {
+            return ResponseHelper::error($e->getMessage(), HttpStatusCode::BAD_REQUEST->value);
         } catch (ApiException $e) {
             return ResponseHelper::error($e->getMessage(), HttpStatusCode::INTERNAL_SERVER_ERROR->value);
         }
@@ -141,6 +144,8 @@ class SmsController extends Controller
             );
 
             return ResponseHelper::success($sendBulkSMSResponse, 'Bulk SMS başarıyla gönderildi.', code: HttpStatusCode::OK->value);
+        } catch (InvalidArgumentException $e) {
+            return ResponseHelper::error($e->getMessage(), HttpStatusCode::BAD_REQUEST->value);
         } catch (ApiException $e) {
             return ResponseHelper::error($e->getMessage(), HttpStatusCode::INTERNAL_SERVER_ERROR->value);
         }
