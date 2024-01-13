@@ -32,7 +32,7 @@ Bu Laravel projesi, büyük miktarda SMS mesajını tek bir istekle göndermeyi 
 2. Proje dizinine gidin:
 
    ```bash
-   cd bulk-sms-projesi
+   cd laravel-bulk-sms-queue-with-unit-tests
    ```
 
 3. Composer bağımlılıklarını yükleyin:
