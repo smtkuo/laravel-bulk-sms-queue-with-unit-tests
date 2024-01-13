@@ -27,7 +27,7 @@ class AuthControllerTest extends TestCase
     {
         $request = new Request([
             'name' => 'Samet',
-            'email' => 'smtkuo@gmail.com',
+            'email' => 'test@mail.com',
             'password' => 'Password123',
             'password_confirmation' => 'Password123'
         ]);
@@ -41,13 +41,13 @@ class AuthControllerTest extends TestCase
     public function it_should_call_login_on_auth_service(): void
     {
         $request = new Request([
-            'email' => 'smtkuo@gmail.com',
+            'email' => 'test@mail.com',
             'password' => 'Password123'
         ]);
         $this->authServiceMock->expects($this->once())
             ->method('login')
             ->with([
-                'email' => 'smtkuo@gmail.com',
+                'email' => 'test@mail.com',
                 'password' => 'Password123'
             ]);
         $this->authController->login($request);

@@ -27,7 +27,7 @@ class AuthController extends Controller
      *         @OA\JsonContent(
      *             required={"name","email","password"},
      *             @OA\Property(property="name", type="string", format="string", example="Samet"),
-     *             @OA\Property(property="email", type="string", format="email", example="smtkuo@gmail.com"),
+     *             @OA\Property(property="email", type="string", format="email", example="test@mail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Password123"),
      *             @OA\Property(property="password_confirmation", type="string", format="password", example="Password123")
      *         )
@@ -78,7 +78,7 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email","password"},
-     *             @OA\Property(property="email", type="string", format="email", example="smtkuo@gmail.com"),
+     *             @OA\Property(property="email", type="string", format="email", example="test@mail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="Password123"),
      *         )
      *     ),

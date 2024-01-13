@@ -31,7 +31,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "smtkuo@gmail.com"
+                                        "example": "test@mail.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -94,7 +94,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "smtkuo@gmail.com"
+                                        "example": "test@mail.com"
                                     },
                                     "password": {
                                         "type": "string",

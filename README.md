@@ -76,6 +76,24 @@ Bu projeyi kullanmak için aşağıdaki adımları takip edebilirsiniz:
 3. Tek SMS veya toplu SMS gönderin.
 4. SMS raporlarını ve rapor detaylarını görüntüleyin.
 
+## JWT Token İçin Özel Secret Key Oluşturma
+
+JWT tokenleri oluştururken kullanılacak güvenli bir secret key (gizli anahtar) oluşturmanız gerekmektedir. Aşağıdaki adımlarla bu işlemi gerçekleştirebilirsiniz:
+
+1. Terminali açın ve projenizin kök dizinine gidin.
+
+2. Aşağıdaki komutu kullanarak yeni bir secret key oluşturun:
+
+php artisan jwt:secret
+
+3. Bu komut, .env dosyanıza JWT_SECRET anahtarını ekler ve rastgele bir secret key oluşturur. Bu key, JWT tokenlerinin şifrelenmesinde kullanılır.
+
+4. .env dosyanızı açın ve oluşturulan JWT_SECRET anahtarını gözden geçirin. Bu anahtar, JWT tokenlerinin güvenliğini sağlamak için kullanılacaktır.
+
+JWT tokenlerinizi güvenli bir şekilde oluşturmak ve doğrulamak için bu secret key'i saklayın ve güvende tutun. Başka birinin bu anahtara erişmesine izin vermeyin.
+
+Özel secret key oluşturmak, Laravel JWT kimlik doğrulama işleminin güvenliğini artırmanıza yardımcı olacaktır.
+
 ## Laravel Jobları Çalıştırma Komutu
 
 Bu Laravel projesinde, Laravel'ın iş sırası (queue) sistemini kullanarak jobları çalıştırmak için kullanılan bir komut bulunmaktadır. Bu komut, arkaplanda çalışan işleri tetiklemek için kullanılır ve çeşitli görevleri otomatize etmek için faydalıdır.
