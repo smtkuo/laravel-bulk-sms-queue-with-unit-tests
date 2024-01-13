@@ -31,4 +31,4 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('/sms-report-details', [SmsController::class, 'getDetail']);
 });
 
-Route::middleware('throttle:10000,1')->post('/send-mock-sms', [MockSmsController::class, 'send']);
+Route::post('/send-mock-sms', [MockSmsController::class, 'send']);
